@@ -6,13 +6,17 @@
   },
   "main": "/index.js",
   "devDependencies": {
+    "gh-pages": "^6.0.0",
     "react-router-dom": "^6.19.0"
   },
   "name": "tic_tac_toe",
   "description": "Tic Tac Toe game",
   "version": "0.0.0",
+  "homepage": "https://davidgit3000.github.io/React_Intro/",
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
