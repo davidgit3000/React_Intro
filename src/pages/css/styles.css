@@ -1,0 +1,61 @@
+body {
+  max-height: 100px;
+  background-color: #c2f2f4;
+}
+
+.flex_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 20px;
+  margin-bottom: 20px;
+}
+
+a,
+.link {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+hr {
+  border: 1px solid black;
+  width: 30%;
+  margin-bottom: 15px;
+}
+
+a:hover,
+.link:hover {
+  color: white;
+  background-color: #348bee;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes move {
+  0% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+.heading {
+  text-align: center;
+  font-size: 30px;
+  animation: fadein 4s;
+}
+
+.move {
+  animation: move 3s;
+}
