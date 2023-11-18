@@ -3,116 +3,58 @@ import NavBar from "../components/NavBar";
 import "./css/styles.css";
 
 export default function Data() {
-  const [triviaFact, setTriviaFact] = useState("");
-  const [mathFact, setMathFact] = useState("");
-  const [dateFact, setDateFact] = useState("");
-  const [yearFact, setYearFact] = useState("");
-  const [num, setNum] = useState(0);
-  const [date, setDate] = useState("2023-11-17");
-  const [year, setYear] = useState("2023");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [numQuotes, setNumQuotes] = useState(1);
+  const [quotes, setQuotes] = useState([]);
 
+  // API Source: https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/
+  // API #161
   useEffect(() => {
-    fetch(`http://numbersapi.com/${num}/trivia?json`)
+    fetch(`https://api.quotable.io/quotes/random?limit=${numQuotes}`)
       .then((res) => res.json())
       .then((json) => {
-        setIsLoaded(true);
-        setTriviaFact(json);
-      });
-  }, [num]);
-
-  useEffect(() => {
-    fetch(`http://numbersapi.com/${num}/math?json`)
-      .then((res) => res.json())
-      .then((json) => {
-        setIsLoaded(true);
-        setMathFact(json);
-      });
-  }, [num]);
-
-  useEffect(() => {
-    const day = date.slice(8, 10);
-    const month = date.slice(5, 7);
-    fetch(`http://numbersapi.com/${month}/${day}/date?json`)
-      .then((res) => res.json())
-      .then((json) => {
-        setIsLoaded(true);
-        setDateFact(json);
-      });
-  }, [date]);
-
-  useEffect(() => {
-    fetch(`http://numbersapi.com/${year}/year?json`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (year <= 2023) {
-          setYearFact(json);
-        } else {
-          alert("Invalid year. The year should not exceed 2023");
+        if (numQuotes > 50) {
+          alert("Maximum quotes allowed: 50");
         }
         setIsLoaded(true);
+        console.log(json);
+        setQuotes(json);
       });
-  }, [year]);
+  }, [numQuotes]);
 
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
-
   return (
     <>
       <NavBar />
-      <h1>Interesting Facts about Numbers</h1>
-      <h3>---- Number Facts ----</h3>
+      <h1>Quotes of the day</h1>
       <form>
+        <label htmlFor="quote" style={{ marginRight: "10px" }}>
+          Enter the number of quotes you want to read:
+        </label>
         <input
-          name="num"
+          name="quote"
           type="number"
-          placeholder="Enter a number"
-          onChange={(e) => setNum(e.target.value)}
+          max={50}
           style={{ marginRight: "10px" }}
+          onChange={(e) => setNumQuotes(e.target.value)}
         />
       </form>
-      <p>
-        <b>Trivia:</b> {triviaFact.text}
-      </p>
-      <p>
-        <b>Math Fact:</b> {mathFact.text}
-      </p>
-
-      <h3>* ---- Date Facts ----</h3>
-      <form>
-        <input
-          name="date"
-          type="date"
-          onChange={(e) => setDate(e.target.value)}
-          style={{ marginRight: "10px" }}
-        />
-      </form>
-      <p>
-        <b>Date Fact:</b> {dateFact.text}
-      </p>
-      <small>
-        <i>
-          * Note that the year input above is not a part of data from the API
-        </i>
-      </small>
       <br />
-      <br />
-
-      <h3>---- Year Facts ----</h3>
-      <form>
-        <input
-          name="date"
-          type="number"
-          max={2023}
-          placeholder="Enter the year"
-          onChange={(e) => setYear(e.target.value)}
-          style={{ marginRight: "10px" }}
-        />
-      </form>
-      <p>
-        <b>Year Fact:</b> {yearFact.text}
-      </p>
+      <ol>
+        {quotes.map((quote) => (
+          <>
+            <li key={quote._id}>
+              <q>
+                <i>{quote.content}</i>
+              </q>
+              <span> - {quote.author}</span>
+            </li>
+            <br />
+          </>
+        ))}
+      </ol>
     </>
   );
 }

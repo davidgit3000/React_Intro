@@ -13,7 +13,7 @@ export default function NavBar() {
         </Link>
         |
         <Link className="link" to={"/data_api"}>
-          Fun Fact about Numbers
+          Quotes of the Day
         </Link>
       </div>
       <hr />
