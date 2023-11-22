@@ -41,6 +41,7 @@ export default function Data() {
           onChange={(e) => setNumQuotes(e.target.value)}
         />
       </form>
+      <small>(Maximum 50 quotes)</small>
       <br />
       <ol>
         {quotes.map((quote) => (
